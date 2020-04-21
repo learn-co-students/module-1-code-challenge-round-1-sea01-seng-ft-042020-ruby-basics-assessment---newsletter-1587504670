@@ -28,33 +28,39 @@ ARTICLES = [
 #########################
 
 def calculate_recipients
-  # Using the SUBSCRIBERS and UNSUBSCRIBED arrays,
-  # write a method that will return an array of only the subscribers who haven't unsubscribed
+  SUBSCRIBERS.select do |email| 
+    email != "cedricschmidt@robel.io" and
+    email != "alverta@bernhard.name"
+    
+  end
 end
 
-def first_n_articles(number_of_articles
-  ARTICLES.first(number_of_articles)
+def first_n_articles(number_of_articles)
+ ARTICLES.first(number_of_articles.to_i)
 end
 
 def print_recipients
-  # Write a method that uses the output of calculate_recipients
-  # and returns a list of emails separated by commas
-  # Ex) "abc@email.com, def@email.com, ghi@email.com"
+  calculate_recipients.join(", ")
 end
 
 def print_one_article(article)
   # Write a method that will take an article hash
   # and print the title, author and text as a formatted string
   # See the README/sample output for examples
+  puts "#{article[:"title"]}"
+  puts "by: #{article[:"author"]}"
+  puts "#{article[:"text"]} \n\n"
 end
+
 
 def print_many_articles(articles)
   # Write a method that will take in an array of article hashes
   # and format each one using the print_one_article method
+  articles.map {|value| print_one_article(value)}
 end
 
 def format_campus_location(campus)
-  "Flatiron #{campus["name"]}"
+  "Flatiron #{campus[:name]}"
 end
 
 def format_subject
@@ -71,7 +77,7 @@ def print_newsletter(number)
   print "SUBJECT: "
   format_subject
 
-  print "RECIPIENTS: "
+  print "RECIPIENTS: \n"
   print_recipients
 
   puts "\nBODY:"
@@ -80,7 +86,7 @@ def print_newsletter(number)
   print_many_articles(articles)
   puts format_footer(CAMPUS)
 
-  end
+
 end
 
 def run
